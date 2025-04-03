@@ -8,7 +8,7 @@
 import { supabase } from '../../supabase';
 
 const { data, error } = await supabase
-  .from('characters')
+  .from('')
   .select()
 </script>
 
