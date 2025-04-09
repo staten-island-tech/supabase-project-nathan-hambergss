@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSignup">
       <input v-model="email" type="email" placeholder="Enter your email" required />
       <input v-model="password" type="password" placeholder="Enter your password" required />
-      <button type="submite" :disabled="loading">Sign Up</button>
+      <button type="submit" :disabled="loading">Sign Up</button>
     </form>
     <p v-if="error" class="error">{{ error }}</p>
   </div>
@@ -35,7 +35,7 @@ const handleSignup = async () => {
       {
         id: user.id,
         email: user.email,
-        created_at: new Date().toISOString(),
+        created_at: new Date().toISOString(), //new Date() --> literally creates a new date based off of computer; .toISOString() --> ISO 8601 format looks like this YYYY-MM-DDTHH:mm:ss.sssZ
       },
     ])
 
@@ -43,9 +43,9 @@ const handleSignup = async () => {
 
     console.log('User has successfully signed up:', data)
   } catch (err) {
-    error.value = err.message || 'Something went wrong. Please try again.'
-  } finally {
-    loading.value = false
+    error.value = err.message || 'Something went wrong. Please try again.' // || --> logical or operator
+  } finally { //finally --> whatever happens in the try block the code inside finally will always run
+    loading.value = false // loading is reactive variable
   }
 }
 </script>
