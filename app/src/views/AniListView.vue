@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AnimeList from './components/AnimeList.vue'
+import AnimeList from '../components/AnimeList.vue'
 
 export default {
   name: 'App',
