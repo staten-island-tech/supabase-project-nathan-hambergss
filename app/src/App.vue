@@ -4,13 +4,12 @@
     <router-link to="/AniList">Go to Anime List</router-link>
     <br />
     <router-link to="/">Go HOME</router-link>
+    <br />
+    <router-link to="/about">Go about</router-link>
+
+    <hr />
+
+    <router-view />
+    <!-- THIS is what makes the routed content appear -->
   </div>
 </template>
-
-<script>
-export default {
-  name: 'Home',
-}
-</script>
-
-<style scoped></style>
