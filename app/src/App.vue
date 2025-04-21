@@ -10,6 +10,5 @@
     <hr />
 
     <router-view />
-    <!-- THIS is what makes the routed content appear -->
   </div>
 </template>

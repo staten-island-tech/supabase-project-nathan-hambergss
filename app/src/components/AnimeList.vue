@@ -1,8 +1,5 @@
 <template>
   <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-semibold text-center text-gray-900 mb-6">Anime List</h1>
-
-    <!-- Anime List -->
     <ul
       v-if="animes.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
@@ -12,18 +9,13 @@
         :key="anime.mal_id"
         class="bg-white rounded-lg shadow-lg overflow-hidden"
       >
-        <!-- Display the Anime Small Image -->
         <img
           :src="anime.images.jpg.small_image_url"
           alt="Anime Image"
           class="w-full h-56 object-cover"
         />
-
         <div class="p-4">
-          <!-- Rank and Title -->
-          <h2 class="text-lg font-medium text-gray-900">#{{ anime.title }}</h2>
-
-          <!-- Display the synopsis if available -->
+          <h2 class="text-lg font-medium text-gray-900">{{ anime.title }}</h2>
           <p class="text-sm text-gray-700 mt-2 truncate" v-if="anime.synopsis">
             {{ anime.synopsis }}
           </p>
@@ -31,8 +23,29 @@
       </li>
     </ul>
 
-    <!-- Loading message -->
-    <p v-else class="text-center text-gray-500">Loading...</p>
+    <p v-if="loading" class="text-center text-gray-500 mt-4">Loading...</p>
+
+    <!-- Pagination Buttons -->
+    <div class="flex justify-center items-center mt-6 space-x-4">
+      <button
+        @click="prevPage"
+        :disabled="page === 1 || loading"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded disabled:opacity-50"
+      >
+        Previous
+      </button>
+
+      <!-- Page Number Display -->
+      <span class="text-lg font-medium text-gray-700"> Page {{ page }} </span>
+
+      <button
+        @click="nextPage"
+        :disabled="endReached || loading"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </template>
 
@@ -42,20 +55,46 @@ export default {
   data() {
     return {
       animes: [],
-      loading: true,
+      page: 1,
+      loading: false,
+      endReached: false,
     }
   },
-  async created() {
-    try {
-      const response = await fetch('https://api.jikan.moe/v4/top/anime?limit=25')
-      const data = await response.json()
+  mounted() {
+    this.fetchAnimes()
+  },
+  methods: {
+    async fetchAnimes() {
+      this.loading = true
+      try {
+        const response = await fetch(
+          `https://api.jikan.moe/v4/top/anime?limit=25&page=${this.page}`,
+        )
+        const data = await response.json()
 
-      this.animes = data.data
-      this.loading = false
-    } catch (error) {
-      console.error('Error fetching anime data:', error)
-      this.loading = false
-    }
+        this.animes = data.data
+        this.endReached = data.data.length === 0
+      } catch (error) {
+        console.error('Error fetching anime:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+    nextPage() {
+      if (!this.endReached) {
+        this.page++
+        this.fetchAnimes()
+
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--
+        this.fetchAnimes()
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    },
   },
 }
 </script>
