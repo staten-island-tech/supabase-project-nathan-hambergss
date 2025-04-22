@@ -10,10 +10,11 @@
         class="bg-white rounded-lg shadow-lg overflow-hidden"
       >
         <img
-          :src="anime.images.jpg.small_image_url"
+          :src="anime.images.jpg.large_image_url"
           alt="Anime Image"
-          class="w-full h-56 object-cover"
+          class="w-full h-auto max-w-full max-h-[300px] object-contain"
         />
+
         <div class="p-4">
           <h2 class="text-lg font-medium text-gray-900">{{ anime.title }}</h2>
           <p class="text-sm text-gray-700 mt-2 truncate" v-if="anime.synopsis">
@@ -32,18 +33,18 @@
         :disabled="page === 1 || loading"
         class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded disabled:opacity-50"
       >
-        Previous
+        Previous 25
       </button>
 
-      <!-- Page Number Display -->
-      <span class="text-lg font-medium text-gray-700"> Page {{ page }} </span>
+      <!-- Page Number -->
+      <span class="text-lg font-large text-gray-700"> Page {{ page }} </span>
 
       <button
         @click="nextPage"
         :disabled="endReached || loading"
         class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
       >
-        Next
+        Next 25
       </button>
     </div>
   </div>

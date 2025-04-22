@@ -1,13 +1,9 @@
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
 <script setup>
-import AuthSignup from '@/components/AuthSignup.vue';
+import AuthSignup from '@/components/AuthSignup.vue'
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
