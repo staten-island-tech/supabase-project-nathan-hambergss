@@ -84,8 +84,11 @@ export const useAuthStore = defineStore('auth', () => {
       return
     }
 
-    user.value = data?.session?.user || null //
+    user.value = data?.session?.user || null
   }
+  supabase.auth.onAuthStateChange((_event, session) => {
+    user.value = session?.user ?? null
+  })
 
   return {
     user,
