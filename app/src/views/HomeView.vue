@@ -9,11 +9,11 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useAuthStore } from '../stores/authStore'
-import AuthSignup from '@/components/AuthSignup.vue'
+import { useAuth } from '../../useAuth'
+import AuthSignup from '@/components/SignUp.vue'
 import AuthLogin from '@/components/AuthLogin.vue'
 
-const auth = useAuthStore()
+const auth = useAuth()
 
 onMounted(() => {
   auth.getSession() // fetch session on load
