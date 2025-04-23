@@ -7,7 +7,7 @@
       <li
         v-for="anime in animes"
         :key="anime.mal_id"
-        class="bg-white rounded-lg shadow-lg overflow-hidden"
+        class="bg-white rounded-lg shadow-lg overflow-hidden relative"
       >
         <img
           :src="anime.images.jpg.large_image_url"
@@ -16,10 +16,10 @@
         />
 
         <div class="p-4">
-          <h2 class="text-lg font-medium text-gray-900">{{ anime.title }}</h2>
-          <p class="text-sm text-gray-700 mt-2 truncate" v-if="anime.synopsis">
-            {{ anime.synopsis }}
-          </p>
+          <!-- Title without the synopsis -->
+          <h2 class="text-lg font-medium text-gray-900">
+            {{ anime.title }}
+          </h2>
         </div>
       </li>
     </ul>
@@ -36,7 +36,6 @@
         Previous 25
       </button>
 
-      <!-- Page Number -->
       <span class="text-lg font-large text-gray-700"> Page {{ page }} </span>
 
       <button
@@ -85,7 +84,6 @@ export default {
       if (!this.endReached) {
         this.page++
         this.fetchAnimes()
-
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     },
