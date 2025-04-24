@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useAuth } from '../../useAuth'
+import { useAuth } from '../composables/useAuth'
 
 const auth = useAuthStore()
 const email = ref('')

@@ -9,7 +9,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useAuth } from '../../useAuth'
+import { useAuth } from '../composables/useAuth'
 import AuthSignup from '@/components/SignUp.vue'
 import AuthLogin from '@/components/AuthLogin.vue'
 
