@@ -7,7 +7,7 @@
       <li
         v-for="anime in animes"
         :key="anime.mal_id"
-        class="bg-white rounded-lg shadow-lg overflow-hidden relative"
+        class="bg-white rounded-lg shadow-lg relative overflow-visible group"
       >
         <img
           :src="anime.images.jpg.large_image_url"
@@ -16,10 +16,19 @@
         />
 
         <div class="p-4">
-          <!-- Title without the synopsis -->
-          <h2 class="text-lg font-medium text-gray-900">
-            {{ anime.title }}
-          </h2>
+          <!-- Title with floating tooltip -->
+          <div class="relative w-fit">
+            <h2 class="text-lg font-medium text-gray-900 cursor-pointer">
+              {{ anime.title }}
+            </h2>
+            <div
+              class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block group-hover:z-50 bg-black bg-opacity-80 text-white text-base rounded-lg py-4 px-6 w-[300px] sm:w-[400px] lg:w-[500px] text-left shadow-lg"
+            >
+              <p class="text-sm leading-relaxed">
+                {{ anime.synopsis }}
+              </p>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -98,4 +107,16 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Tooltip specific styles */
+.tooltip {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.group:hover .tooltip {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+</style>
