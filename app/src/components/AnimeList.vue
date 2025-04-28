@@ -108,7 +108,6 @@ export default {
 </script>
 
 <style scoped>
-/* Tooltip specific styles */
 .tooltip {
   transition:
     opacity 0.3s ease,
