@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="signUp">
+  <form @submit.prevent="handleSignUp">
     <input v-model="email" type="email" placeholder="Email" required />
     <input v-model="password" type="password" placeholder="Password" required />
     <button type="submit" :disabled="isLoading">{{ isLoading ? 'Registering...' : 'Sign Up' }}</button>

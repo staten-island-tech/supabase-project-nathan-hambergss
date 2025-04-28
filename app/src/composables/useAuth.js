@@ -1,10 +1,12 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabase'
+import { useRouter } from 'vue-router'
 
 export function useAuth() {
   const user = ref(null)
   const error = ref(null)
   const isLoading = ref(false)
+  const router = useRouter() // Create a router instance
 
   const fetchUser = async () => {
     const {
@@ -38,7 +40,7 @@ export function useAuth() {
       error.value = signUpError.message
     } else {
       error.value = null
-      alert('Check your email to confirm your account!')
+      router.push('/') //goes bak to home page 
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="signIn">
+  <form @submit.prevent="handleSignIn">
     <input v-model="email" type="email" placeholder="Email" required />
     <input v-model="password" type="password" placeholder="Password" required />
     <button type="submit" :disabled="isLoading">{{ isLoading ? 'Logging in...' : 'Sign In' }}</button>
@@ -21,7 +21,7 @@ const password = ref('')
 const handleSignIn = async () => {
   await signIn(email.value, password.value)
   if (!error) {
-    router.push('/home')  
+    router.push('/anime')  
   }
 }
 </script>
