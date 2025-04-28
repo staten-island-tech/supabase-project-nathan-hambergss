@@ -1,21 +1,32 @@
 <template>
   <div>
-    <button v-if="auth.user" @click="auth.logout">Logout</button>
-    <p v-else>You are not logged in.</p>
-    <AuthSignup />
-    <AuthLogin />
+    <h1>Home View</h1>
+    <button @click="goToSignUp">Go to Sign Up</button>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useAuth } from '../composables/useAuth'
-import AuthSignup from '@/components/SignUp.vue'
-import AuthLogin from '@/components/AuthLogin.vue'
+import { useRouter } from 'vue-router'
 
-const auth = useAuth()
+const router = useRouter()
 
-onMounted(() => {
-  auth.getSession() // fetch session on load
-})
+const goToSignUp = () => {
+  router.push('/login')
+}
 </script>
+
+<style scoped>
+button {
+  padding: 10px 20px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #36a274;
+}
+</style>

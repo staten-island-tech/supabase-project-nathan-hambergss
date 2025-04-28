@@ -7,14 +7,33 @@ export function useAuth() {
   const isLoading = ref(false)
 
   const fetchUser = async () => {
-    const { data: { user: currentUser } } = await supabase.auth.getUser()
+    const {
+      data: { user: currentUser },
+    } = await supabase.auth.getUser()
     user.value = currentUser
   }
 
   const signUp = async (email, password) => {
+    console.log('Email:', email)
+    console.log('Password:', password)
+
+    if (typeof email !== 'string' || typeof password !== 'string') {
+      error.value = 'Email and password must be strings'
+      return
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailRegex.test(email)) {
+      error.value = 'Invalid email format'
+      return
+    }
+
     isLoading.value = true
+
     const { error: signUpError } = await supabase.auth.signUp({ email, password })
+
     isLoading.value = false
+
     if (signUpError) {
       error.value = signUpError.message
     } else {
