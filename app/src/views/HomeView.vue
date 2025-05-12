@@ -1,14 +1,15 @@
 <template>
-  <div>
-    <h1>Home View</h1>
-    <RouterLink to="/login" class="btn">Go to Sign Up</RouterLink>
-    <RouterLink to="/login" class="btn">Go to Sign In</RouterLink>
+  <div class="flex flex-col items-center justify-center min-h-screen bg-base-200 p-6 space-y-6">
+    <h1 class="text-4xl font-bold text-primary">Welcome Home</h1>
+    <div class="flex space-x-4">
+      <button class="btn btn-primary" @click="$router.push('/signup')">Go to Sign Up</button>
+      <button class="btn btn-outline btn-secondary" @click="$router.push('/login')">
+        Go to Sign In
+      </button>
+    </div>
   </div>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style scoped>
-</style>
+<style scoped></style>
