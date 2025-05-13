@@ -10,7 +10,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuth } from '../composables/useAuth'
+import { useUserStore } from '../stores/user'  //pinia
 import { useRouter } from 'vue-router'
+
+const userStore = useUserStore()
 
 const { signUp, error, isLoading } = useAuth()
 const router = useRouter()
@@ -20,10 +23,15 @@ const password = ref('')
 
 const handleSignUp = async () => {
   await signUp(email.value, password.value)
+  
   if (!error) {
-    router.push('/login')  //redirect
+    const userData = { email: email.value } 
+    userStore.login(userData)
+    localStorage.setItem('user', JSON.stringify(userData))
+    router.push('/anime')
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
