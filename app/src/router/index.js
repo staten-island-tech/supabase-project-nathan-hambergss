@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/anime',
       name: 'anime',
-      component: () => import('@/views/AnimeView.vue'),
+      component: () => import('@/views/CheckEmail.vue'),
     }
   ],
 })

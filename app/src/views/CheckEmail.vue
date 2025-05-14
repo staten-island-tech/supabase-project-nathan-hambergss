@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>List of Animes</h1>
+        <h1>Check Your Email</h1>
     </div>
 </template>
 

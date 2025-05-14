@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabase'
+
 export const useUserStore = defineStore('user', () => {
   const user = ref(null)
   const isLoggedIn = ref(false)
@@ -21,12 +22,19 @@ export const useUserStore = defineStore('user', () => {
     } = await supabase.auth.getSession()
 
     if (session?.user) {
-      user.value = session.user
-      isLoggedIn.value = true
+      login(session.user)
     } else {
-      user.value = null
-      isLoggedIn.value = false
+      logout()
     }
+  }
+  const initAuthListener = () => {
+    supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        login(session.user)
+      } else {
+        logout()
+      }
+    })
   }
 
   return {
@@ -35,5 +43,6 @@ export const useUserStore = defineStore('user', () => {
     login,
     logout,
     checkLoggedInStatus,
+    initAuthListener,
   }
 })
