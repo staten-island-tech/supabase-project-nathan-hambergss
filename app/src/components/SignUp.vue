@@ -36,6 +36,6 @@ const handleSignUp = async () => {
     error.value = signUpError.message
     return
   }
-  router.push('/anime')
+  router.push('/checkemail')
 }
 </script>
