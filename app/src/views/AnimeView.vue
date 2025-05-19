@@ -1,13 +1,18 @@
 <template>
-    <div>
-        <h1>List of Animes</h1>
-    </div>
+  <div>
+    <AnimeList />
+  </div>
 </template>
 
-<script setup>
+<script>
+import AnimeList from '@/components/AnimeList.vue'
 
+export default {
+  name: 'AnimeListPage',
+  components: {
+    AnimeList,
+  },
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
