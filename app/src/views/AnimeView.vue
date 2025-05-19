@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+    <div>
+        <h1>List of Animes</h1>
+    </div>
 </template>
 
 <script setup>
