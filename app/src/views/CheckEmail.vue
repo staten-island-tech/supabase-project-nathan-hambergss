@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+    <div>
+        <h1>Check Your Email</h1>
+    </div>
 </template>
 
 <script setup>
