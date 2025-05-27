@@ -1,9 +1,12 @@
 <template>
   <div>
     <router-view></router-view>
+    <AnimeImporter />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import AnimeImporter from './components/AnimeImporter.vue'
+</script>
 
 <style scoped></style>
