@@ -7,7 +7,7 @@
       <li
         v-for="anime in animes"
         :key="anime.mal_id"
-        class="bg-white rounded-lg shadow-lg relative overflow-visible group"
+        class="bg-[#e6fcff] rounded-lg shadow-lg relative overflow-visible group"
       >
         <img
           :src="anime.images.jpg.large_image_url"
@@ -16,13 +16,12 @@
         />
 
         <div class="p-4">
-          <!-- Title with floating tooltip -->
-          <div class="relative w-fit">
-            <h2 class="text-lg font-medium text-gray-900 cursor-pointer">
+          <div class="relative w-full flex justify-center">
+            <h2 class="text-lg font-medium text-gray-900 cursor-pointer text-center">
               {{ anime.title }}
             </h2>
             <div
-              class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block group-hover:z-50 bg-black bg-opacity-80 text-white text-base rounded-lg py-4 px-6 w-[300px] sm:w-[400px] lg:w-[500px] text-left shadow-lg"
+              class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block group-hover:z-50 bg-[#ff7575] bg-opacity-70 text-white text-base rounded-lg py-4 px-6 w-[300px] sm:w-[400px] lg:w-[500px] text-left shadow-lg"
             >
               <p class="text-sm leading-relaxed">
                 {{ anime.synopsis }}
@@ -35,7 +34,6 @@
 
     <p v-if="loading" class="text-center text-gray-500 mt-4">Loading...</p>
 
-    <!-- Pagination Buttons -->
     <div class="flex justify-center items-center mt-6 space-x-4">
       <button
         @click="prevPage"
@@ -50,7 +48,7 @@
       <button
         @click="nextPage"
         :disabled="endReached || loading"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
+        class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
       >
         Next 25
       </button>
@@ -58,53 +56,46 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AnimeList',
-  data() {
-    return {
-      animes: [],
-      page: 1,
-      loading: false,
-      endReached: false,
-    }
-  },
-  mounted() {
-    this.fetchAnimes()
-  },
-  methods: {
-    async fetchAnimes() {
-      this.loading = true
-      try {
-        const response = await fetch(
-          `https://api.jikan.moe/v4/top/anime?limit=25&page=${this.page}`,
-        )
-        const data = await response.json()
+<script setup>
+import { ref, onMounted } from 'vue'
 
-        this.animes = data.data
-        this.endReached = data.data.length === 0
-      } catch (error) {
-        console.error('Error fetching anime:', error)
-      } finally {
-        this.loading = false
-      }
-    },
-    nextPage() {
-      if (!this.endReached) {
-        this.page++
-        this.fetchAnimes()
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    },
-    prevPage() {
-      if (this.page > 1) {
-        this.page--
-        this.fetchAnimes()
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    },
-  },
+const animes = ref([])
+const page = ref(1)
+const loading = ref(false)
+const endReached = ref(false)
+
+const fetchAnimes = async () => {
+  loading.value = true
+  try {
+    const response = await fetch(`https://api.jikan.moe/v4/top/anime?limit=25&page=${page.value}`)
+    const data = await response.json()
+
+    animes.value = data.data
+    endReached.value = data.data.length === 0
+  } catch (error) {
+    console.error('Error fetching anime:', error)
+  } finally {
+    loading.value = false
+  }
 }
+
+const nextPage = () => {
+  if (!endReached.value) {
+    page.value++
+    fetchAnimes()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
+const prevPage = () => {
+  if (page.value > 1) {
+    page.value--
+    fetchAnimes()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
+onMounted(fetchAnimes)
 </script>
 
 <style scoped>

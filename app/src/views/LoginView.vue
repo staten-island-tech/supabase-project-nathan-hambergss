@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Login View</h1>
+  <div class="flex flex-col items-center justify-center min-h-screen bg-[#ffebff] p-6 space-y-20">
+    <h1 class="text-4xl font-bold text-secondary">Login View</h1>
     <SignIn />
   </div>
 </template>
