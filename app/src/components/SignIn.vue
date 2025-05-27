@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSignIn" class="space-y-4">
-    <label class="flex items-center gap-2 border px-3 py-2 rounded-md input input-secondary">
+    <label class="flex items-center gap-2 border px-3 py-2 rounded-md input input-primary">
       <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g
           stroke-linejoin="round"
@@ -21,7 +21,7 @@
         class="flex-1 bg-transparent outline-none"
       />
     </label>
-    <label class="flex items-center gap-2 border px-3 py-2 rounded-md input input-secondary">
+    <label class="flex items-center gap-2 border px-3 py-2 rounded-md input input-primary">
       <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g
           stroke-linejoin="round"
@@ -47,7 +47,7 @@
         class="flex-1 bg-transparent outline-none"
       />
     </label>
-    <button type="submit" :disabled="isLoading" class="btn btn-primary w-full">
+    <button type="submit" :disabled="isLoading" class="btn btn-secondary w-full">
       {{ isLoading ? 'Logging in...' : 'Sign In' }}
     </button>
     <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>

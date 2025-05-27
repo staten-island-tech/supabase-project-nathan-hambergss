@@ -7,7 +7,7 @@
       <li
         v-for="anime in animes"
         :key="anime.mal_id"
-        class="bg-[#e6fcff] rounded-lg shadow-lg relative overflow-visible group"
+        class="bg-[#e9fcff] rounded-lg shadow-lg relative overflow-visible group"
       >
         <img
           :src="anime.images.jpg.large_image_url"
@@ -17,7 +17,7 @@
 
         <div class="p-4">
           <div class="relative w-full flex justify-center">
-            <h2 class="text-lg font-medium text-gray-900 cursor-pointer text-center">
+            <h2 class="text-lg font-medium text-[#2d346d] cursor-pointer text-center">
               {{ anime.title }}
             </h2>
             <div
@@ -48,7 +48,7 @@
       <button
         @click="nextPage"
         :disabled="endReached || loading"
-        class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
+        class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
       >
         Next 25
       </button>
