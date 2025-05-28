@@ -15,7 +15,7 @@ const router = createRouter({
       component: () => import('@/views/LoginView.vue'),
     },
     {
-       path: '/anime',
+      path: '/anime',
       name: 'anime',
       component: () => import('@/views/AnimeView.vue'),
     },
@@ -28,7 +28,11 @@ const router = createRouter({
       path: '/checkemail',
       name: 'checkemail',
       component: () => import('@/views/CheckEmail.vue'),
-    }
+    },
+    { path: '/profile',
+      name: 'Profile',
+      component: () => import('@/views/ProfileView.vue'),
+    },
   ],
 })
 
