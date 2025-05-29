@@ -41,9 +41,16 @@ async function insertNewAnime(apiAnimes) {
   insertError.value = null
 
   try {
-    const malIds = apiAnimes.map((anime) => anime.mal_id)
+    // Remove duplicates with saem Mal_ID
+    const uniqueMap = new Map()
+    for (const anime of apiAnimes) {
+      if (!uniqueMap.has(anime.mal_id)) {
+        uniqueMap.set(anime.mal_id, anime)
+      }
+    }
+    const uniqueAnimes = Array.from(uniqueMap.values())
 
-    // Query Supabase for existing mal_ids to avoid duplicates
+    const malIds = uniqueAnimes.map((anime) => anime.mal_id)
     const { data: existingAnimes, error: fetchError } = await supabase
       .from('anime')
       .select('mal_id')
@@ -52,12 +59,10 @@ async function insertNewAnime(apiAnimes) {
     if (fetchError) throw fetchError
 
     const existingIds = new Set(existingAnimes.map((a) => a.mal_id))
-
-    // Filter out already existing anime
-    const newAnimes = apiAnimes.filter((anime) => !existingIds.has(anime.mal_id))
+    const newAnimes = uniqueAnimes.filter((anime) => !existingIds.has(anime.mal_id))
 
     if (newAnimes.length === 0) {
-      insertSuccess.value = true // nothing new, but consider it success
+      insertSuccess.value = true
       return
     }
 
@@ -69,7 +74,9 @@ async function insertNewAnime(apiAnimes) {
       description: anime.synopsis,
     }))
 
-    const { error: insertErrorSupabase } = await supabase.from('anime').insert(formatted)
+    const { error: insertErrorSupabase } = await supabase
+      .from('anime')
+      .upsert(formatted, { onConflict: 'mal_id' })
 
     if (insertErrorSupabase) throw insertErrorSupabase
 
@@ -158,7 +165,7 @@ onMounted(fetchAnimes)
       </div>
 
       <p v-if="inserting" class="text-blue-600">Importing new anime into database...</p>
-      <p v-if="insertSuccess" class="text-green-600">✅ Insert successful!</p>
+      <p v-if="insertSuccess" class="text-green-600">✅ Insert successful</p>
       <p v-if="insertError" class="text-red-600">❌ Insert error: {{ insertError }}</p>
     </div>
   </div>

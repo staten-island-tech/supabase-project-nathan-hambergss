@@ -80,22 +80,12 @@ onMounted(() => {
 watch(page, () => {
   fetchAndInsertAnime()
 })
-
-function nextPage() {
-  page.value++
-}
-
-function prevPage() {
-  if (page.value > 1) {
-    page.value--
-  }
-}
 </script>
 
 <template>
   <div class="p-4">
     <p v-if="loading">Loading and importing anime...</p>
-    <p v-if="success">✅ Insert successful!</p>
-    <p v-if="error">❌ Error: {{ error }}</p>
+    <p v-if="success">Insert successful!</p>
+    <p v-if="error">Error: {{ error }}</p>
   </div>
 </template>
