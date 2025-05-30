@@ -163,10 +163,6 @@ onMounted(fetchAnimes)
           Next 24
         </button>
       </div>
-
-      <p v-if="inserting" class="text-blue-600">Importing new anime into database...</p>
-      <p v-if="insertSuccess" class="text-green-600">✅ Insert successful</p>
-      <p v-if="insertError" class="text-red-600">❌ Insert error: {{ insertError }}</p>
     </div>
   </div>
 </template>
