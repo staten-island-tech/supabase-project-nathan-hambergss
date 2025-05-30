@@ -116,7 +116,7 @@ onMounted(fetchAnimes)
       <li
         v-for="anime in animes"
         :key="anime.mal_id"
-        class="bg-[#e6fcff] rounded-lg shadow-lg relative overflow-visible group"
+        class="bg-[#e6fcff] rounded-lg shadow-lg overflow-hidden"
       >
         <img
           :src="anime.images.jpg.large_image_url"
@@ -124,19 +124,15 @@ onMounted(fetchAnimes)
           class="w-full h-auto max-w-full max-h-[300px] object-contain"
         />
 
-        <div class="p-4">
-          <div class="relative w-full flex justify-center">
-            <h2 class="text-lg font-medium text-gray-900 cursor-pointer text-center">
-              {{ anime.title }}
-            </h2>
-            <div
-              class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block group-hover:z-50 bg-[#ff7575] bg-opacity-70 text-white text-base rounded-lg py-4 px-6 w-[300px] sm:w-[400px] lg:w-[500px] text-left shadow-lg"
-            >
-              <p class="text-sm leading-relaxed">
-                {{ anime.synopsis }}
-              </p>
-            </div>
-          </div>
+        <div class="p-4 text-center">
+          <h2 class="text-lg font-medium text-gray-900 mb-2">
+            {{ anime.title }}
+          </h2>
+          <button
+            class="mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+          >
+            Click here to see more
+          </button>
         </div>
       </li>
     </ul>
@@ -158,7 +154,7 @@ onMounted(fetchAnimes)
         <button
           @click="nextPage"
           :disabled="endReached || loading"
-          class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
+          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
         >
           Next 24
         </button>
