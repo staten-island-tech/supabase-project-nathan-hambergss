@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'Profile',
       component: () => import('@/views/ProfileView.vue'),
     },
+    {
+      path: '/anime/:mal_id',
+      name: 'Info',
+      component: () => import('@/views/InfoView.vue'),
+    },
   ],
 })
 

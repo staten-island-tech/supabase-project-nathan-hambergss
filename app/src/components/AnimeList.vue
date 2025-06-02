@@ -1,6 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { supabase } from '../lib/supabase.js'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goToInfo = (mal_id) => {
+  router.push({ name: 'InfoView', params: { mal_id } })
+}
 
 const animes = ref([])
 const page = ref(1)
@@ -23,7 +29,7 @@ async function fetchAnimes() {
     animes.value = data.data
     endReached.value = data.data.length === 0
 
-    // After fetch, insert new anime to Supabase, avoiding duplicates
+    //after fetch, insert new anime to Supabase, avoiding duplicates
     if (animes.value.length > 0) {
       await insertNewAnime(animes.value)
     }
@@ -41,7 +47,7 @@ async function insertNewAnime(apiAnimes) {
   insertError.value = null
 
   try {
-    // Remove duplicates with saem Mal_ID
+    //remove duplicates with saem mal_id
     const uniqueMap = new Map()
     for (const anime of apiAnimes) {
       if (!uniqueMap.has(anime.mal_id)) {
@@ -130,6 +136,7 @@ onMounted(fetchAnimes)
           </h2>
           <button
             class="mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+            @click="goToInfo(anime.mal_id)"
           >
             Click here to see more
           </button>
