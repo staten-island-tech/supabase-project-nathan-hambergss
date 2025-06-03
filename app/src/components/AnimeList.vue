@@ -1,4 +1,7 @@
 <script setup>
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 import { ref, onMounted } from 'vue'
 import { supabase } from '../lib/supabase.js'
 
@@ -109,11 +112,11 @@ onMounted(fetchAnimes)
 
 <template>
   <div class="container mx-auto p-6">
-    <ul
+    <div
       v-if="animes.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
-      <li
+      <div
         v-for="anime in animes"
         :key="anime.mal_id"
         class="bg-[#e6fcff] rounded-lg shadow-lg relative overflow-visible group"
@@ -138,8 +141,8 @@ onMounted(fetchAnimes)
             </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
 
     <p v-if="loading" class="text-center text-gray-500 mt-4">Loading...</p>
 
