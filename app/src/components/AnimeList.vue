@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const goToInfo = (mal_id) => {
-  router.push({ name: 'InfoView', params: { mal_id } })
+  router.push({ name: 'info', params: { mal_id } })
 }
 
 const animes = ref([])
@@ -135,7 +135,7 @@ onMounted(fetchAnimes)
             {{ anime.title }}
           </h2>
           <button
-            class="mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+            class="mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
             @click="goToInfo(anime.mal_id)"
           >
             Click here to see more

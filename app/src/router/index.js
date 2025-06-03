@@ -35,7 +35,7 @@ const router = createRouter({
     },
     {
       path: '/anime/:mal_id',
-      name: 'Info',
+      name: 'info',
       component: () => import('@/views/InfoView.vue'),
     },
   ],
