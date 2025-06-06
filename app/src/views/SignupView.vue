@@ -50,7 +50,7 @@
         />
       </label>
       <button type="submit" :disabled="isLoading" class="btn btn-secondary w-full">
-        {{ isLoading ? 'Logging in...' : 'Sign In' }}
+        {{ isLoading ? 'Logging in...' : 'Sign Up' }}
       </button>
       <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
     </form>

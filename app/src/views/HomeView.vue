@@ -1,25 +1,92 @@
 <template>
   <div class="relative min-h-screen bg-[#f4fbfa] p-6">
-    <div
-      class="absolute top-4 left-4 bg-white shadow-lg rounded-lg px-4 py-2 border border-gray-200"
+    <!-- Header -->
+    <header
+      class="w-full bg-white border-b border-gray-200 px-6 py-4 text-center shadow-sm fixed top-0 left-0 z-50 overflow-hidden"
     >
-      <p class="text-5xl font-bold text-primary">Welcome to the Anime Recommendation App</p>
-    </div>
+      <!-- Marquee Wrapper -->
+      <div
+        ref="marqueeWrapper"
+        class="relative whitespace-nowrap flex overflow-hidden"
+        style="width: 100%"
+      >
+        <!-- Three copies of the text for seamless loop -->
+        <div ref="marqueeContent" class="flex whitespace-nowrap" style="will-change: transform">
+          <h1 class="text-3xl sm:text-5xl font-bold text-primary px-6 whitespace-nowrap">
+            Welcome to the Anime Recommendation App
+          </h1>
+          <h1 class="text-3xl sm:text-5xl font-bold text-primary px-6 whitespace-nowrap">
+            Welcome to the Anime Recommendation App
+          </h1>
+          <h1 class="text-3xl sm:text-5xl font-bold text-primary px-6 whitespace-nowrap">
+            Welcome to the Anime Recommendation App
+          </h1>
+        </div>
+      </div>
+    </header>
 
-    <div class="flex flex-col items-center justify-center min-h-screen space-y-10">
-      <h1 class="text-4xl font-bold text-secondary">Sign Up/In to Access the Animes</h1>
-      <div class="flex space-x-4">
-        <button class="btn btn-outline btn-primary" @click="$router.push('/signup')">
-          Go to Sign Up
-        </button>
-        <button class="btn btn-outline btn-secondary" @click="$router.push('/login')">
-          Go to Sign In
-        </button>
+    <!-- Main Content -->
+    <div class="flex items-center justify-center min-h-screen pt-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl px-4">
+        <!-- Login Card -->
+        <div
+          class="bg-white shadow-xl rounded-xl p-10 border border-gray-300 flex flex-col items-center min-h-[300px]"
+        >
+          <h2 class="text-3xl font-semibold text-secondary mb-4">Log In to Your Account</h2>
+          <p class="mb-6 text-center text-gray-600 text-lg">
+            Already have an account? Click below to sign in.
+          </p>
+          <button
+            class="btn btn-outline btn-secondary text-lg px-6 py-2 mt-auto"
+            @click="$router.push('/login')"
+          >
+            Go to Sign In
+          </button>
+        </div>
+
+        <!-- Sign Up Card -->
+        <div
+          class="bg-white shadow-xl rounded-xl p-10 border border-gray-300 flex flex-col items-center min-h-[300px]"
+        >
+          <h2 class="text-3xl font-semibold text-primary mb-4">Don't Have an Account?</h2>
+          <p class="mb-6 text-center text-gray-600 text-lg">
+            Create a new account to start discovering anime recommendations!
+          </p>
+          <button
+            class="btn btn-outline btn-primary text-lg px-6 py-2 mt-auto"
+            @click="$router.push('/signup')"
+          >
+            Go to Sign Up
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { gsap } from 'gsap'
 
-<style scoped></style>
+const marqueeContent = ref(null)
+
+onMounted(() => {
+  const content = marqueeContent.value
+  const oneCopyWidth = content.offsetWidth / 3 // width of one text block (since 3 copies)
+
+  gsap.to(content, {
+    x: `-=${oneCopyWidth}`,
+    duration: 15, // adjust speed here (seconds)
+    ease: 'linear',
+    repeat: -1,
+  })
+})
+</script>
+
+<style scoped>
+/* Optional: prevent text selection for smooth marquee */
+#scrolling-text,
+#scrolling-text * {
+  user-select: none;
+}
+</style>
