@@ -1,3 +1,60 @@
+<template>
+  <div class="container mx-auto p-6">
+    <ul
+      v-if="animes.length > 0"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      <li
+        v-for="anime in animes"
+        :key="anime.mal_id"
+        class="bg-[#e6fcff] rounded-lg shadow-lg overflow-hidden"
+      >
+        <img
+          :src="anime.images.jpg.large_image_url"
+          alt="Anime Image"
+          class="w-full h-auto max-w-full max-h-[300px] object-contain"
+        />
+
+        <div class="p-4 text-center">
+          <h2 class="text-lg font-medium text-gray-900 mb-2">
+            {{ anime.title }}
+          </h2>
+          <button
+            class="animated-button mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait transition-transform duration-200"
+            @click="goToInfo(anime.mal_id)"
+          >
+            Click here to see more
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <p v-if="loading" class="text-center text-gray-500 mt-4">Loading...</p>
+
+    <div class="flex flex-col items-center mt-6 space-y-2">
+      <div class="flex justify-center items-center space-x-4">
+        <button
+          @click="prevPage"
+          :disabled="page === 1 || loading"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded disabled:opacity-50"
+        >
+          Previous 24
+        </button>
+
+        <span class="text-lg font-large text-gray-700"> Page {{ page }} </span>
+
+        <button
+          @click="nextPage"
+          :disabled="endReached || loading"
+          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
+        >
+          Next 24
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import gsap from 'gsap'
 import { ref, onMounted, nextTick, watch } from 'vue'
@@ -151,60 +208,3 @@ watch(animes, () => {
   setupButtonAnimations()
 })
 </script>
-
-<template>
-  <div class="container mx-auto p-6">
-    <ul
-      v-if="animes.length > 0"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-    >
-      <li
-        v-for="anime in animes"
-        :key="anime.mal_id"
-        class="bg-[#e6fcff] rounded-lg shadow-lg overflow-hidden"
-      >
-        <img
-          :src="anime.images.jpg.large_image_url"
-          alt="Anime Image"
-          class="w-full h-auto max-w-full max-h-[300px] object-contain"
-        />
-
-        <div class="p-4 text-center">
-          <h2 class="text-lg font-medium text-gray-900 mb-2">
-            {{ anime.title }}
-          </h2>
-          <button
-            class="animated-button mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait transition-transform duration-200"
-            @click="goToInfo(anime.mal_id)"
-          >
-            Click here to see more
-          </button>
-        </div>
-      </li>
-    </ul>
-
-    <p v-if="loading" class="text-center text-gray-500 mt-4">Loading...</p>
-
-    <div class="flex flex-col items-center mt-6 space-y-2">
-      <div class="flex justify-center items-center space-x-4">
-        <button
-          @click="prevPage"
-          :disabled="page === 1 || loading"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded disabled:opacity-50"
-        >
-          Previous 24
-        </button>
-
-        <span class="text-lg font-large text-gray-700"> Page {{ page }} </span>
-
-        <button
-          @click="nextPage"
-          :disabled="endReached || loading"
-          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
-        >
-          Next 24
-        </button>
-      </div>
-    </div>
-  </div>
-</template>

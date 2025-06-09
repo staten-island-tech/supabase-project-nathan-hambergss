@@ -20,19 +20,21 @@
         <p class="mt-4 text-gray-700 whitespace-pre-wrap">{{ anime.synopsis }}</p>
 
         <div class="mt-6 flex gap-4">
-          <button
-            @click="addFavorite(anime)"
-            class="bg-[#ffb347] hover:bg-[#ffa726] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
-          >
-            Add to Favorites
-          </button>
+          <div class="mt-6 flex gap-4">
+            <button
+              @click="handleAddFavorite(anime)"
+              class="bg-[#ffb347] hover:bg-[#ffa726] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
+            >
+              Add to Favorites
+            </button>
 
-          <button
-            @click="addRecommendation(anime)"
-            class="bg-[#90ee90] hover:bg-[#76c893] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
-          >
-            Add to Recommendations
-          </button>
+            <button
+              @click="handleAddRecommendation(anime)"
+              class="bg-[#90ee90] hover:bg-[#76c893] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
+            >
+              Add to Recommendations
+            </button>
+          </div>
         </div>
       </div>
       <div v-else class="text-center text-gray-500">Loading anime info...</div>
@@ -42,11 +44,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAnimeStore } from '@/stores/animeStore.js'
 
 const { addFavorite, addRecommendation } = useAnimeStore()
 const route = useRoute()
+const router = useRouter()
 
 const anime = ref(null)
 
@@ -60,4 +63,14 @@ onMounted(async () => {
     console.error('Failed to fetch anime details:', error)
   }
 })
+
+function handleAddFavorite(anime) {
+  addFavorite(anime)
+  router.push('/profile')
+}
+
+function handleAddRecommendation(anime) {
+  addRecommendation(anime)
+  router.push('/profile')
+}
 </script>
