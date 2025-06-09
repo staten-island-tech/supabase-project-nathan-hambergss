@@ -44,7 +44,7 @@
           </button>
         </div>
 
-        <!-- Sign Up Card -->
+
         <div
           class="bg-white shadow-xl rounded-xl p-10 border border-gray-300 flex flex-col items-center min-h-[300px]"
         >
@@ -72,11 +72,11 @@ const marqueeContent = ref(null)
 
 onMounted(() => {
   const content = marqueeContent.value
-  const oneCopyWidth = content.offsetWidth / 3 // width of one text block (since 3 copies)
+  const oneCopyWidth = content.offsetWidth / 3 //3 copys
 
   gsap.to(content, {
     x: `-=${oneCopyWidth}`,
-    duration: 15, // adjust speed here (seconds)
+    duration: 15, //peed (seconds)
     ease: 'linear',
     repeat: -1,
   })
@@ -84,7 +84,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Optional: prevent text selection for smooth marquee */
 #scrolling-text,
 #scrolling-text * {
   user-select: none;
