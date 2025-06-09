@@ -52,7 +52,7 @@ async function fetchAndInsertAnime() {
 
     // Format new anime entries for insertion
     const formatted = newAnimes.map((anime) => ({
-      mal_id: anime.mal_id, // Ensure mal_id column exists and is unique in DB
+      mal_id: anime.mal_id,
       name: anime.title,
       genre: anime.genres.map((g) => g.name).join(', '),
       release_date: anime.aired?.from ? anime.aired.from.split('T')[0] : null,

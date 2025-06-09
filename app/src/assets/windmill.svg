@@ -1,0 +1,19 @@
+
+<svg
+  width="200"
+  height="200"
+  viewBox="0 0 200 200"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <rect x="95" y="100" width="10" height="80" fill="#8B4513" />
+
+  <circle cx="100" cy="100" r="6" fill="#333" />
+
+  <g id="blades">
+    <rect x="98" y="20" width="4" height="60" fill="#aaa" />
+    <rect x="98" y="120" width="4" height="60" fill="#aaa" transform="rotate(90 100 100)" />
+    <rect x="98" y="120" width="4" height="60" fill="#aaa" transform="rotate(45 100 100)" />
+    <rect x="98" y="120" width="4" height="60" fill="#aaa" transform="rotate(-45 100 100)" />
+  </g>
+</svg>
