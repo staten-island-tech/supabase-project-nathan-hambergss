@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import gsap from 'gsap'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { supabase } from '../lib/supabase.js'
 import { useRouter } from 'vue-router'
 
@@ -29,7 +30,6 @@ async function fetchAnimes() {
     animes.value = data.data
     endReached.value = data.data.length === 0
 
-    //after fetch, insert new anime to Supabase, avoiding duplicates
     if (animes.value.length > 0) {
       await insertNewAnime(animes.value)
     }
@@ -47,7 +47,6 @@ async function insertNewAnime(apiAnimes) {
   insertError.value = null
 
   try {
-    //remove duplicates with saem mal_id
     const uniqueMap = new Map()
     for (const anime of apiAnimes) {
       if (!uniqueMap.has(anime.mal_id)) {
@@ -110,7 +109,47 @@ const prevPage = () => {
   }
 }
 
-onMounted(fetchAnimes)
+function setupButtonAnimations() {
+  nextTick(() => {
+    const buttons = document.querySelectorAll('.animated-button')
+    buttons.forEach((btn) => {
+      let xSet = gsap.quickSetter(btn, 'x', 'px')
+      let ySet = gsap.quickSetter(btn, 'y', 'px')
+      let scaleSet = gsap.quickSetter(btn, 'scale')
+      let bounds = btn.getBoundingClientRect()
+
+      btn.addEventListener('mouseenter', () => {
+        bounds = btn.getBoundingClientRect()
+      })
+
+      btn.addEventListener('mousemove', (e) => {
+        const x = e.clientX - bounds.left - bounds.width / 2
+        const y = e.clientY - bounds.top - bounds.height / 2
+        xSet(x * 0.1)
+        ySet(y * 0.1)
+        scaleSet(1.05)
+      })
+
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out',
+        })
+      })
+    })
+  })
+}
+
+onMounted(async () => {
+  await fetchAnimes()
+  setupButtonAnimations()
+})
+watch(animes, () => {
+  setupButtonAnimations()
+})
 </script>
 
 <template>
@@ -135,7 +174,7 @@ onMounted(fetchAnimes)
             {{ anime.title }}
           </h2>
           <button
-            class="mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait"
+            class="animated-button mt-2 bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded cursor-pointer active:cursor-wait transition-transform duration-200"
             @click="goToInfo(anime.mal_id)"
           >
             Click here to see more
