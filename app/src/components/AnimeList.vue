@@ -91,7 +91,7 @@ async function fetchAnimes() {
       await insertNewAnime(animes.value)
     }
   } catch (error) {
-    console.error('Error fetching anime:', error)
+    console.error('%c[AnimeList] Error fetching anime:', 'color: red;', error)
     insertError.value = 'Failed to fetch anime list'
   } finally {
     loading.value = false
@@ -144,6 +144,7 @@ async function insertNewAnime(apiAnimes) {
 
     insertSuccess.value = true
   } catch (err) {
+    console.error('%c[AnimeList] Error inserting anime:', 'color: red;', err)
     insertError.value = err.message || 'Unknown error inserting anime'
   } finally {
     inserting.value = false
@@ -172,7 +173,6 @@ function setupButtonAnimations() {
     buttons.forEach((btn) => {
       let xSet = gsap.quickSetter(btn, 'x', 'px')
       let ySet = gsap.quickSetter(btn, 'y', 'px')
-      let scaleSet = gsap.quickSetter(btn, 'scale')
       let bounds = btn.getBoundingClientRect()
 
       btn.addEventListener('mouseenter', () => {
@@ -184,7 +184,7 @@ function setupButtonAnimations() {
         const y = e.clientY - bounds.top - bounds.height / 2
         xSet(x * 0.1)
         ySet(y * 0.1)
-        scaleSet(1.05)
+        gsap.to(btn, { scale: 1.05, duration: 0.2, overwrite: true })
       })
 
       btn.addEventListener('mouseleave', () => {
@@ -204,6 +204,7 @@ onMounted(async () => {
   await fetchAnimes()
   setupButtonAnimations()
 })
+
 watch(animes, () => {
   setupButtonAnimations()
 })
