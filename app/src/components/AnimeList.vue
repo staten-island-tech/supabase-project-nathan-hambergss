@@ -91,7 +91,7 @@ async function fetchAnimes() {
       await insertNewAnime(animes.value)
     }
   } catch (error) {
-    console.error('%c[AnimeList] Error fetching anime:', 'color: red;', error)
+    console.error('Error fetching anime:', error)
     insertError.value = 'Failed to fetch anime list'
   } finally {
     loading.value = false
@@ -104,15 +104,17 @@ async function insertNewAnime(apiAnimes) {
   insertError.value = null
 
   try {
-    const uniqueMap = new Map()
-    for (const anime of apiAnimes) {
-      if (!uniqueMap.has(anime.mal_id)) {
-        uniqueMap.set(anime.mal_id, anime)
+    const seenIds = []
+    const uniqueAnimes = apiAnimes.filter((anime) => {
+      if (!seenIds.includes(anime.mal_id)) {
+        seenIds.push(anime.mal_id)
+        return true
       }
-    }
-    const uniqueAnimes = Array.from(uniqueMap.values())
+      return false
+    })
 
     const malIds = uniqueAnimes.map((anime) => anime.mal_id)
+
     const { data: existingAnimes, error: fetchError } = await supabase
       .from('anime')
       .select('mal_id')
@@ -120,8 +122,8 @@ async function insertNewAnime(apiAnimes) {
 
     if (fetchError) throw fetchError
 
-    const existingIds = new Set(existingAnimes.map((a) => a.mal_id))
-    const newAnimes = uniqueAnimes.filter((anime) => !existingIds.has(anime.mal_id))
+    const existingIds = existingAnimes.map((a) => a.mal_id)
+    const newAnimes = uniqueAnimes.filter((anime) => !existingIds.includes(anime.mal_id))
 
     if (newAnimes.length === 0) {
       insertSuccess.value = true
@@ -136,15 +138,12 @@ async function insertNewAnime(apiAnimes) {
       description: anime.synopsis,
     }))
 
-    const { error: insertErrorSupabase } = await supabase
-      .from('anime')
-      .upsert(formatted, { onConflict: 'mal_id' })
+    const { error: insertErrorSupabase } = await supabase.from('anime').insert(formatted)
 
     if (insertErrorSupabase) throw insertErrorSupabase
 
     insertSuccess.value = true
   } catch (err) {
-    console.error('%c[AnimeList] Error inserting anime:', 'color: red;', err)
     insertError.value = err.message || 'Unknown error inserting anime'
   } finally {
     inserting.value = false
@@ -173,6 +172,7 @@ function setupButtonAnimations() {
     buttons.forEach((btn) => {
       let xSet = gsap.quickSetter(btn, 'x', 'px')
       let ySet = gsap.quickSetter(btn, 'y', 'px')
+      let scaleSet = gsap.quickSetter(btn, 'scale')
       let bounds = btn.getBoundingClientRect()
 
       btn.addEventListener('mouseenter', () => {
@@ -184,7 +184,7 @@ function setupButtonAnimations() {
         const y = e.clientY - bounds.top - bounds.height / 2
         xSet(x * 0.1)
         ySet(y * 0.1)
-        gsap.to(btn, { scale: 1.05, duration: 0.2, overwrite: true })
+        scaleSet(1.05)
       })
 
       btn.addEventListener('mouseleave', () => {
@@ -204,7 +204,6 @@ onMounted(async () => {
   await fetchAnimes()
   setupButtonAnimations()
 })
-
 watch(animes, () => {
   setupButtonAnimations()
 })
