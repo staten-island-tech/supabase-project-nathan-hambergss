@@ -4,7 +4,6 @@
       <h2 class="text-2xl font-bold text-[#2d346d]">User Profile</h2>
     </header>
 
-    <!-- Favorites -->
     <section>
       <h3 class="text-xl font-semibold text-[#2d346d] mb-2">
         Favorites ({{ animeStore.favorites.length }})
@@ -24,7 +23,6 @@
       <p v-if="animeStore.favorites.length === 0" class="text-gray-500">No favorites yet.</p>
     </section>
 
-    <!-- Recommendations -->
     <section>
       <h3 class="text-xl font-semibold text-[#2d346d] mb-2">
         Recommendations ({{ animeStore.recommendations.length }})
