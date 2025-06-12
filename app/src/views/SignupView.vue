@@ -20,7 +20,7 @@
           placeholder="Password"
           required
           minlength="8"
-          pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must include number, lowercase, uppercase"
           class="flex-1 bg-transparent outline-none"
         />
