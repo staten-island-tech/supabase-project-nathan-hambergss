@@ -3,6 +3,12 @@
     <header class="bg-[#2d346d] text-white h-40 flex items-center justify-between px-8">
       <h1 class="text-5xl font-bold">List of Animes</h1>
       <router-link
+        to="/explore"
+        class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+      >
+        Look at other users
+      </router-link>
+      <router-link
         to="/profile"
         class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
       >
