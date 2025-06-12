@@ -1,19 +1,21 @@
 <template>
   <div>
     <header class="bg-[#2d346d] text-white h-40 flex items-center justify-between px-8">
-      <h1 class="text-5xl font-bold">List of Animes</h1>
-      <router-link
-        to="/explore"
-        class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
-      >
-        Look at other users
-      </router-link>
-      <router-link
-        to="/profile"
-        class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
-      >
-        View Profile
-      </router-link>
+      <h1 ref="title" class="text-5xl font-bold">List of Animes</h1>
+      <div class="flex gap-4">
+        <router-link
+          to="/explore"
+          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+        >
+          Look at other users
+        </router-link>
+        <router-link
+          to="/profile"
+          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+        >
+          View Profile
+        </router-link>
+      </div>
     </header>
 
     <transition name="fade">
@@ -32,11 +34,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap'
 import AnimeList from '@/components/AnimeList.vue'
 import UserProfile from '@/components/UserProfile.vue'
 
 const showProfile = ref(false)
+const title = ref(null)
+
+onMounted(() => {
+  gsap.fromTo(
+    title.value,
+    { opacity: 0, y: -50 },
+    { opacity: 1, y: 0, duration: 1.5, ease: 'bounce.out' },
+  )
+})
 </script>
 
 <style scoped>

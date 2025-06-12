@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import UserProfile from '../components/UserProfile.vue'
+import ExploreUsers from '@/views/ExploreUsers.vue'
+import UserProfileView from '@/views/UserProfileView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,14 +32,20 @@ const router = createRouter({
     },
     { path: '/profile', name: 'Profile', component: () => import('@/views/ProfileView.vue') },
     {
-      path: '/anime/:mal_id',
+      path: '/info/:mal_id',
       name: 'info',
       component: () => import('@/views/InfoView.vue'),
     },
+
     {
       path: '/explore',
       name: 'Explore',
       component: () => import('@/views/ExploreUsers.vue'),
+    },
+    {
+      path: '/user/:id',
+      name: 'UserProfile',
+      component: UserProfileView,
     },
   ],
 })

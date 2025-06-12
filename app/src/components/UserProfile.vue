@@ -1,12 +1,11 @@
 <template>
   <div class="user-profile space-y-6">
     <header class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold text-[#2d346d]">User Profile</h2>
+      <h2 ref="mainTitle" class="text-2xl font-bold text-[#2d346d]">Your Profile</h2>
     </header>
 
-    <!-- Favorites -->
     <section>
-      <h3 class="text-xl font-semibold text-[#2d346d] mb-2">
+      <h3 ref="favoritesTitle" class="text-xl font-semibold text-[#2d346d] mb-2">
         Favorites ({{ animeStore.favorites.length }})
       </h3>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -16,7 +15,10 @@
           class="bg-[#fff7e6] p-4 rounded shadow text-[#2d346d] flex justify-between items-center"
         >
           <span>{{ anime.title }}</span>
-          <button @click="animeStore.removeFavorite(anime.mal_id)" class="btn btn-error btn-sm">
+          <button
+            @click="animeStore.removeFavorite(anime.mal_id)"
+            class="btn btn-error btn-soft btn-sm"
+          >
             Remove
           </button>
         </li>
@@ -24,9 +26,8 @@
       <p v-if="animeStore.favorites.length === 0" class="text-gray-500">No favorites yet.</p>
     </section>
 
-    <!-- Recommendations -->
     <section>
-      <h3 class="text-xl font-semibold text-[#2d346d] mb-2">
+      <h3 ref="recommendationsTitle" class="text-xl font-semibold text-[#2d346d] mb-2">
         Recommendations ({{ animeStore.recommendations.length }})
       </h3>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -38,7 +39,7 @@
           <span>{{ anime.title }}</span>
           <button
             @click="animeStore.removeRecommendation(anime.mal_id)"
-            class="btn btn-error btn-sm"
+            class="btn btn-error btn-soft btn-sm"
           >
             Remove
           </button>
@@ -52,14 +53,42 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import gsap from 'gsap'
 import { useAnimeStore } from '@/stores/animeStore.js'
 
 const animeStore = useAnimeStore()
 
+const mainTitle = ref(null)
+const favoritesTitle = ref(null)
+const recommendationsTitle = ref(null)
+
 onMounted(() => {
   animeStore.fetchFavorites()
   animeStore.fetchRecommendations()
+
+  gsap.from(mainTitle.value, {
+    opacity: 0,
+    y: -20,
+    duration: 0.8,
+    ease: 'power2.out',
+  })
+
+  gsap.from(favoritesTitle.value, {
+    opacity: 0,
+    x: -30,
+    duration: 0.8,
+    delay: 0.5,
+    ease: 'power2.out',
+  })
+
+  gsap.from(recommendationsTitle.value, {
+    opacity: 0,
+    x: 30,
+    duration: 0.8,
+    delay: 0.7,
+    ease: 'power2.out',
+  })
 })
 </script>
 
