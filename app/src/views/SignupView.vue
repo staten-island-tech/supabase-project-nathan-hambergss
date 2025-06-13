@@ -62,17 +62,21 @@ const handleSignUp = async () => {
   isLoading.value = true
   error.value = null
 
-  const { data: users, error: fetchError } = await supabase.from('Users').select('username')
-
-  if (fetchError) {
-    error.value = 'Error checking username. Please try again.'
+  if (!username.value.trim()) {
+    error.value = 'Username cannot be empty.'
     isLoading.value = false
     return
   }
 
-  const usernameTaken = users.some((user) => user.username === username.value)
+  const { data: users, error: userCheckError } = await supabase.from('Users').select('username')
+  if (userCheckError) {
+    error.value = 'Error checking username.'
+    isLoading.value = false
+    return
+  }
 
-  if (usernameTaken) {
+  const taken = users.some((u) => u.username === username.value)
+  if (taken) {
     error.value = 'Username is already taken.'
     isLoading.value = false
     return
@@ -88,6 +92,8 @@ const handleSignUp = async () => {
     isLoading.value = false
     return
   }
+
+  localStorage.setItem('pending_username', username.value)
 
   isLoading.value = false
   router.push('/checkemail')
