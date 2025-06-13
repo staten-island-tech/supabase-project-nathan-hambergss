@@ -17,11 +17,12 @@
           View Profile
         </router-link>
         <button
-          @click="logout"
-          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
-        >
-          Logout
-        </button>
+  				v-if="userStore.isLoggedIn"
+  				@click="logout"
+  				class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+				>
+  				Logout
+				</button>
       </div>
     </header>
 
@@ -46,8 +47,15 @@ import { gsap } from 'gsap'
 import AnimeList from '@/components/AnimeList.vue'
 import UserProfile from '@/components/UserProfile.vue'
 
+const userStore = useUserStore()
+const router = useRouter()
 const showProfile = ref(false)
 const title = ref(null)
+
+const logout = async () => {
+  await userStore.logout()
+  router.push('/')
+}
 
 onMounted(() => {
   gsap.fromTo(
