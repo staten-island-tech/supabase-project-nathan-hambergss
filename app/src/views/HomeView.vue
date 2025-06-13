@@ -1,6 +1,5 @@
 <template>
   <div class="relative min-h-screen bg-[#f4fbfa] p-6">
-    <!-- Header -->
     <header
       class="w-full bg-white border-b border-gray-200 px-6 py-4 text-center shadow-sm fixed top-0 left-0 z-50 overflow-hidden"
     >
@@ -10,7 +9,6 @@
         class="relative whitespace-nowrap flex overflow-hidden"
         style="width: 100%"
       >
-        <!-- Three copies of the text for seamless loop -->
         <div ref="marqueeContent" class="flex whitespace-nowrap" style="will-change: transform">
           <h1 class="text-3xl sm:text-5xl font-bold text-primary px-6 whitespace-nowrap">
             Welcome to the Anime Recommendation App
@@ -25,10 +23,8 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <div class="flex items-center justify-center min-h-screen pt-24">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-6xl px-4">
-        <!-- Login Card -->
         <div
           class="bg-white shadow-xl rounded-xl p-10 border border-gray-300 flex flex-col items-center min-h-[300px]"
         >
@@ -43,7 +39,6 @@
             Go to Sign In
           </button>
         </div>
-
 
         <div
           class="bg-white shadow-xl rounded-xl p-10 border border-gray-300 flex flex-col items-center min-h-[300px]"
@@ -76,7 +71,7 @@ onMounted(() => {
 
   gsap.to(content, {
     x: `-=${oneCopyWidth}`,
-    duration: 15, //peed (seconds)
+    duration: 15, //(seconds)
     ease: 'linear',
     repeat: -1,
   })
