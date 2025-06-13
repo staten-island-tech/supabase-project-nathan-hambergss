@@ -68,14 +68,14 @@ const handleSignUp = async () => {
     return
   }
 
-  const { data: users, error: userCheckError } = await supabase.from('Users').select('username')
+  const { data: allUsers, error: userCheckError } = await supabase.from('Users').select('username')
   if (userCheckError) {
     error.value = 'Error checking username.'
     isLoading.value = false
     return
   }
 
-  const taken = users.some((u) => u.username === username.value)
+  const taken = allUsers.some((u) => u.username === username.value)
   if (taken) {
     error.value = 'Username is already taken.'
     isLoading.value = false
