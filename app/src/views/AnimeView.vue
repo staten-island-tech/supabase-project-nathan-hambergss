@@ -16,6 +16,12 @@
         >
           View Profile
         </router-link>
+        <button
+          @click="logout"
+          class="bg-[#ff7575] hover:bg-[#fa4e6e] text-white font-semibold py-2 px-4 rounded"
+        >
+          Logout
+        </button>
       </div>
     </header>
 
