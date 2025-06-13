@@ -62,6 +62,22 @@ const handleSignUp = async () => {
   isLoading.value = true
   error.value = null
 
+  const { data: users, error: fetchError } = await supabase.from('Users').select('username')
+
+  if (fetchError) {
+    error.value = 'Error checking username. Please try again.'
+    isLoading.value = false
+    return
+  }
+
+  const usernameTaken = users.some((user) => user.username === username.value)
+
+  if (usernameTaken) {
+    error.value = 'Username is already taken.'
+    isLoading.value = false
+    return
+  }
+
   const { data, error: signUpError } = await supabase.auth.signUp({
     email: email.value,
     password: password.value,
@@ -69,19 +85,6 @@ const handleSignUp = async () => {
 
   if (signUpError) {
     error.value = signUpError.message
-    isLoading.value = false
-    return
-  }
-
-  const { error: insertError } = await supabase.from('Users').insert([
-    {
-      id: data.user.id,
-      username: username.value,
-    },
-  ])
-
-  if (insertError) {
-    error.value = insertError.message
     isLoading.value = false
     return
   }
