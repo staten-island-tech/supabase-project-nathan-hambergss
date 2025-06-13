@@ -13,7 +13,7 @@
       </router-link>
     </header>
 
-    <OtherUserProfile :userId="userId" :username="username" />
+    <OtherUserProfile :userId="userId" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import OtherUserProfile from '@/components/OtherUserProfile.vue'
 import { gsap } from 'gsap'
 
 const route = useRoute()
-const userId = route.params.id
+const userId = route.params.id // this is the UUID from the route
 const username = ref('')
 const title = ref(null)
 
@@ -37,6 +37,12 @@ onMounted(async () => {
   )
 
   const { data, error } = await supabase.from('Users').select('username').eq('id', userId).single()
-  username.value = data?.username || 'Unknown'
+
+  if (error) {
+    console.error('Failed to fetch user:', error)
+    username.value = 'Unknown'
+  } else {
+    username.value = data?.username || 'Unknown'
+  }
 })
 </script>

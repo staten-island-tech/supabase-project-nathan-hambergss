@@ -22,7 +22,8 @@
         class="bg-white p-4 rounded-lg shadow hover:shadow-md transition flex flex-col justify-between"
       >
         <div>
-          <h2 class="text-xl font-semibold text-[#2d346d]">{{ user.username }}</h2>
+          <!-- 🔁 Show email instead of id or username -->
+          <h2 class="text-xl font-semibold text-[#2d346d]">{{ user.email }}</h2>
         </div>
         <button
           @click="goToUserProfile(user.id)"
@@ -47,12 +48,12 @@ const loading = ref(true)
 const error = ref(null)
 const title = ref(null)
 
+// Navigate to user profile
 const goToUserProfile = (userId) => {
   router.push({ name: 'UserProfile', params: { id: userId } })
 }
 
 onMounted(async () => {
-  // Animate the title
   gsap.fromTo(
     title.value,
     { opacity: 0, y: 20 },
@@ -62,17 +63,21 @@ onMounted(async () => {
   try {
     const {
       data: { user },
+      error: authError,
     } = await supabase.auth.getUser()
+
+    if (authError) throw authError
 
     const { data, error: fetchError } = await supabase
       .from('Users')
-      .select('id, username')
+      .select('id, email')
       .neq('id', user.id)
 
     if (fetchError) throw fetchError
+
     users.value = data
   } catch (err) {
-    error.value = err.message
+    error.value = err.message || 'An error occurred while loading users.'
   } finally {
     loading.value = false
   }

@@ -1,7 +1,9 @@
 <template>
   <div class="user-profile space-y-6">
     <header class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold text-[#2d346d]">{{ username }}'s Profile</h2>
+      <h2 class="text-2xl font-bold text-[#2d346d] break-words max-w-full" title="User email">
+        {{ email }}'s Profile
+      </h2>
     </header>
 
     <section>
@@ -51,17 +53,32 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-  },
 })
 
+const email = ref('Loading...')
 const favorites = ref([])
 const recommendations = ref([])
 
+async function fetchUserEmail() {
+  const { data, error } = await supabase
+    .from('Users')
+    .select('email')
+    .eq('id', props.userId)
+    .single()
+
+  if (error || !data) {
+    console.error('Error fetching user email:', error)
+    email.value = 'Unknown'
+  } else {
+    email.value = data.email
+  }
+}
+
 async function fetchUserAnimeData() {
-  let { data: favData, error: favError } = await supabase
+  if (!props.userId) return
+
+  // Fetch favorites
+  const { data: favData, error: favError } = await supabase
     .from('Favorites')
     .select('anime:anime_id(name, mal_id)')
     .eq('user_id', props.userId)
@@ -77,7 +94,8 @@ async function fetchUserAnimeData() {
       })) || []
   }
 
-  let { data: recData, error: recError } = await supabase
+  // Fetch recommendations
+  const { data: recData, error: recError } = await supabase
     .from('Recommendation')
     .select('anime:anime_id(name, mal_id)')
     .eq('user_id', props.userId)
@@ -94,8 +112,18 @@ async function fetchUserAnimeData() {
   }
 }
 
-onMounted(fetchUserAnimeData)
-watch(() => props.userId, fetchUserAnimeData)
+onMounted(() => {
+  fetchUserEmail()
+  fetchUserAnimeData()
+})
+
+watch(
+  () => props.userId,
+  () => {
+    fetchUserEmail()
+    fetchUserAnimeData()
+  },
+)
 </script>
 
 <style scoped>
