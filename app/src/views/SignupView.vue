@@ -62,26 +62,6 @@ const handleSignUp = async () => {
   isLoading.value = true
   error.value = null
 
-  if (!username.value.trim()) {
-    error.value = 'Username cannot be empty.'
-    isLoading.value = false
-    return
-  }
-
-  const { data: allUsers, error: userCheckError } = await supabase.from('Users').select('username')
-  if (userCheckError) {
-    error.value = 'Error checking username.'
-    isLoading.value = false
-    return
-  }
-
-  const taken = allUsers.some((u) => u.username === username.value)
-  if (taken) {
-    error.value = 'Username is already taken.'
-    isLoading.value = false
-    return
-  }
-
   const { data, error: signUpError } = await supabase.auth.signUp({
     email: email.value,
     password: password.value,
@@ -92,8 +72,6 @@ const handleSignUp = async () => {
     isLoading.value = false
     return
   }
-
-  localStorage.setItem('pending_username', username.value)
 
   isLoading.value = false
   router.push('/checkemail')

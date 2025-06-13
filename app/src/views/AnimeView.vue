@@ -49,20 +49,6 @@ onMounted(() => {
     { opacity: 1, y: 0, duration: 1.5, ease: 'bounce.out' },
   )
 })
-
-onMounted(async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
-  if (session && session.user) {
-    const username = localStorage.getItem('pending_username')
-    if (username) {
-      await supabase.from('Users').update({ username }).eq('id', session.user.id) //.eq filters the columbs is equal to specific val
-      localStorage.removeItem('pending_username')
-    }
-  }
-})
 </script>
 
 <style scoped>
