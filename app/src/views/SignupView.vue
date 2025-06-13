@@ -75,7 +75,7 @@ const handleSignUp = async () => {
 
   const { error: insertError } = await supabase.from('Users').insert([
     {
-      user_id: data.user.id,
+      id: data.user.id,
       username: username.value,
     },
   ])
