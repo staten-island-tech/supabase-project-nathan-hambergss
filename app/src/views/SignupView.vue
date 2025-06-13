@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-[#f4fbfa] p-6 space-y-20">
+    <title>Anime Recommendation App</title>
     <h1 class="text-4xl font-bold text-primary">Sign Up</h1>
 
     <form @submit.prevent="handleSignUp" class="space-y-4">
