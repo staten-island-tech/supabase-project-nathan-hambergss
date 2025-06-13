@@ -1,5 +1,6 @@
 <template>
   <div class="relative min-h-screen bg-[#f4fbfa] p-6">
+    <title>Anime Recommendation App</title>
     <header
       class="w-full bg-white border-b border-gray-200 px-6 py-4 text-center shadow-sm fixed top-0 left-0 z-50 overflow-hidden"
     >

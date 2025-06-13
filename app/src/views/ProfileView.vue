@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen p-6 bg-[#f4fbfa]">
+    <title>Anime Recommendation App</title>
     <header class="bg-[#2d346d] text-white h-20 flex items-center justify-center mb-6 rounded-md">
       <h1 class="text-4xl font-bold">User Profile</h1>
       <router-link

@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen p-6 bg-[#f4fbfa]">
+    <title>Anime Recommendation App</title>
     <header
       class="bg-[#2d346d] text-white h-20 flex items-center justify-between px-6 mb-6 rounded-md"
     >

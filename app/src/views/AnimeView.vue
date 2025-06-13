@@ -1,5 +1,6 @@
 <template>
   <div>
+    <title>Anime Recommendation App</title>
     <header class="bg-[#2d346d] text-white h-40 flex items-center justify-between px-8">
       <h1 ref="title" class="text-5xl font-bold">List of Animes</h1>
       <div class="flex gap-4">
