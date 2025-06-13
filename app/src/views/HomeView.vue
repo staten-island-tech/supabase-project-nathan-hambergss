@@ -3,6 +3,7 @@
     <header
       class="w-full bg-white border-b border-gray-200 px-6 py-4 text-center shadow-sm fixed top-0 left-0 z-50 overflow-hidden"
     >
+      <!-- Marquee Wrapper -->
       <div
         ref="marqueeWrapper"
         class="relative whitespace-nowrap flex overflow-hidden"
@@ -70,7 +71,7 @@ onMounted(() => {
 
   gsap.to(content, {
     x: `-=${oneCopyWidth}`,
-    duration: 15,
+    duration: 15, //(seconds)
     ease: 'linear',
     repeat: -1,
   })
