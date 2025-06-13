@@ -37,6 +37,12 @@
           class="bg-[#e6fff7] p-4 rounded shadow text-[#2d346d] flex flex-col gap-2"
         >
           <span>{{ anime.title }}</span>
+          <router-link
+            :to="`/info/${anime.mal_id}`"
+            class="text-sm text-white bg-[#2d346d] hover:bg-[#1f2449] px-3 py-1 rounded text-center"
+          >
+            View Info About Anime
+          </router-link>
         </li>
       </ul>
       <p v-if="recommendations.length === 0" class="text-gray-500">No recommendations yet.</p>
