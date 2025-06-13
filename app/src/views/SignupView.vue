@@ -25,17 +25,6 @@
           class="flex-1 bg-transparent outline-none"
         />
       </label>
-
-      <label class="flex items-center gap-2 border px-3 py-2 rounded-md input input-primary">
-        <input
-          v-model="username"
-          type="text"
-          placeholder="Username"
-          required
-          class="flex-1 bg-transparent outline-none"
-        />
-      </label>
-
       <button type="submit" :disabled="isLoading" class="btn btn-secondary w-full">
         {{ isLoading ? 'Creating account...' : 'Sign Up' }}
       </button>
@@ -52,7 +41,6 @@ import { useRouter } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
-const username = ref('')
 const isLoading = ref(false)
 const error = ref(null)
 
